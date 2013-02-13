@@ -7,6 +7,7 @@ int main(int argc, char *argv[])
 {
 	int pipefd[2];
 	char buf[25];
+	char *bufchild;
 	FILE *in;
 	FILE *out;
 //	scanf("%s", buf);
@@ -20,17 +21,22 @@ int main(int argc, char *argv[])
 	case 0: /*Child*/
 		if (close(pipefd[1]) == -1) /* close unused write end */
 			perror("Could not close pipe\n");
-//		out = fdopen(pipefd[0], "r");
+		out = fdopen(pipefd[0], "r");
+		sleep(2);
+		bufchild = fgets(bufchild, 25, out);
+		printf("%s\n", bufchild);
+		
 	/*	sleep(2);
 		execl("sort", "sort", (char *) NULL);
-	*/	if (close(pipefd[0]) == -1)
-			perror("error closing pipe\n");
+	*	if (close(pipefd[0]) == -1)
+			perror("error closing pipe\n");*/
+		fclose(out);
 		break;
 	default: /*parent*/		
 		if (close(pipefd[0]) == -1) /* close unused read end */
 			perror("Could not close pipe\n");
-	/*	in = fdopen(pipefd[1], "w");
-		while (scanf("%['a'-'Z']", buf) != 0)
+		in = fdopen(pipefd[1], "w");
+	/*	while (scanf("%['a'-'Z']", buf) != 0)
 		{
 			fputs(buf, in);
 		}
@@ -40,10 +46,15 @@ int main(int argc, char *argv[])
 			perror("error closing pipe\n");
 	*/
 		scanf("%[A-z]", buf);
-		printf("%s\n", buf);
-		if (close(pipefd[1]) == -1)
+	/*	printf("%s\n", buf);*/
+		fputs(buf, in);
+		fputc('\n', in);
+		fflush(in);
+		wait();
+		fclose(in);
+	/*	if (close(pipefd[1]) == -1)
 			perror("error closing pipe\n");
-		break;
+	*/	break;
 	}
 
 	return 0;
