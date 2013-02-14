@@ -8,10 +8,10 @@ int main(int argc, char *argv[])
 {
 	int pipefd[2];
 	char buf[25];
-	char bufchild[25];
+//	char bufchild[25];
 	FILE *in;
-	FILE *out;
-	FILE *newstdin;
+//	FILE *out;
+//	FILE *newstdin;
 //	scanf("%s", buf);
 //	printf("%s\n", buf);
 
@@ -23,24 +23,47 @@ int main(int argc, char *argv[])
 	case 0: /*Child*/
 		if (close(pipefd[1]) == -1) /* close unused write end */
 			perror("Could not close pipe\n");
-		out = fdopen(pipefd[0], "r");
-		newstdin = fdopen(0, "w");
-		sleep(2);
-		while(fgets(bufchild, 25, out) != NULL)
+		if (pipefd[0] != STDIN_FILENO)
 		{
-			fprintf(newstdin, "%s", bufchild);
+			if (dup2(pipefd[0], STDIN_FILENO) == -1)
+				perror("Could not connect to stdin\n");
+			if (close(pipefd[0]) == -1)
+				perror("could not close pipe\n");
 		}
-	/*	sleep(2);*/
+	//	out = fdopen(pipefd[0], "r");
+	//	newstdin = fdopen(STDIN_FILENO, "w");
+		sleep(2);
+	/*	whil9e(fgets(bufchild, 25, out) != NULL)
+		{
+			if (fputs(bufchild,newstdin) == EOF)
+				printf("error on fputs\n");
+			if (fputs(bufchild, newstdin))
+				printf("fputs works.\n");
+			else
+				printf("there's a mistake.\n");
+		}
+		sleep(2);
 		fclose(out);
-		execl("sort", "sort", (char *) NULL);
 		fclose(newstdin);
-	/*	if (close(pipefd[0]) == -1)
-			perror("error closing pipe\n");*/
+		scanf("%s", buf);
+		printf("The word is %s",buf);*/
+//		write(STDIN_FILENO,"hari\ngokul",10);
+		execl("/bin/sort", "/bin/sort", (char *) NULL);
+		if (close(pipefd[0]) == -1)
+			perror("error closing pipe\n");
 		break;
 	default: /*parent*/		
 		if (close(pipefd[0]) == -1) /* close unused read end */
 			perror("Could not close pipe\n");
-		in = fdopen(pipefd[1], "w");
+		if (pipefd[1] != STDOUT_FILENO)
+		{
+			if (dup2(pipefd[1], STDOUT_FILENO) == -1)
+				perror("Could not connect to stdin\n");
+			if (close(pipefd[1]) == -1)
+				perror("could not close pipe\n");
+		}
+	
+		in = fdopen(STDOUT_FILENO, "w");
 	/*	while (scanf("%['a'-'Z']", buf) != 0)
 		{
 			fputs(buf, in);
@@ -59,9 +82,9 @@ int main(int argc, char *argv[])
 	/*	if (close(pipefd[1]) == -1)
 			perror("error closing pipe\n");
 	*/	}
-		fflush(in);
 		fclose(in);
 		wait(NULL);
+
 		break;
 	}
 
