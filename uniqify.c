@@ -2,14 +2,16 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 int main(int argc, char *argv[])
 {
 	int pipefd[2];
 	char buf[25];
-	char *bufchild;
+	char bufchild[25];
 	FILE *in;
 	FILE *out;
+	FILE *newstdin;
 //	scanf("%s", buf);
 //	printf("%s\n", buf);
 
@@ -22,15 +24,18 @@ int main(int argc, char *argv[])
 		if (close(pipefd[1]) == -1) /* close unused write end */
 			perror("Could not close pipe\n");
 		out = fdopen(pipefd[0], "r");
+		newstdin = fdopen(0, "w");
 		sleep(2);
-		bufchild = fgets(bufchild, 25, out);
-		printf("%s\n", bufchild);
-		
-	/*	sleep(2);
-		execl("sort", "sort", (char *) NULL);
-	*	if (close(pipefd[0]) == -1)
-			perror("error closing pipe\n");*/
+		while(fgets(bufchild, 25, out) != NULL)
+		{
+			fprintf(newstdin, "%s", bufchild);
+		}
+	/*	sleep(2);*/
 		fclose(out);
+		execl("sort", "sort", (char *) NULL);
+		fclose(newstdin);
+	/*	if (close(pipefd[0]) == -1)
+			perror("error closing pipe\n");*/
 		break;
 	default: /*parent*/		
 		if (close(pipefd[0]) == -1) /* close unused read end */
@@ -45,16 +50,19 @@ int main(int argc, char *argv[])
 		if (close(pipefd[1]) == -1)
 			perror("error closing pipe\n");
 	*/
-		scanf("%[A-z]", buf);
+		while (scanf("%[A-z]", buf) != EOF)
+		{
 	/*	printf("%s\n", buf);*/
-		fputs(buf, in);
-		fputc('\n', in);
-		fflush(in);
-		wait();
-		fclose(in);
+			scanf("%*c");
+			fputs(buf, in);
+			fputc('\n', in);
 	/*	if (close(pipefd[1]) == -1)
 			perror("error closing pipe\n");
-	*/	break;
+	*/	}
+		fflush(in);
+		fclose(in);
+		wait(NULL);
+		break;
 	}
 
 	return 0;
