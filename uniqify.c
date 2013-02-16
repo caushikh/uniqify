@@ -4,24 +4,54 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define N_PIPES 2
 int main(int argc, char *argv[])
 {
-	int pipefd[2];
-	char buf[25];
-//	char bufchild[25];
-	FILE *in;
-//	FILE *out;
-//	FILE *newstdin;
-//	scanf("%s", buf);
-//	printf("%s\n", buf);
+	int sortfd[N_PIPES][2];
+	int suppfd[N_PIPES][2];
+//	int pipefd[2];
+//	char buf[25];
+//	FILE *in;
+	int i;
+	for (i = 0; i < N_PIPES; i++)
+	{
+		/* create pipes for each sorter */
+		if (pipe(sortfd[i]) == -1)
+			perror("Could not open pipe\n");
+		
+		/* create child processes */
+		switch(fork()) {
+		case -1:
+			perror("fork\n");
+		case 0: /*child*/
+			printf("I am sorter %d. My processID is %ld.\n",i+1,getpid());
+			if (close(sortfd[i][1]) == -1)
+				perror("could not close write end\n");
+			if (close(sortfd[i][0]) == -1)
+				perror("Could not close pipe\n");
+			exit(EXIT_SUCCESS);
+			break;
+		default: /*parent*/
 
-	if (pipe(pipefd) == -1)
+			/* close read end of pipe for master process */
+			if (close(sortfd[i][0]) == -1) 
+				perror("Could not close pipe\n");
+
+			if (close(sortfd[i][1]) == -1)		
+				perror("could not close pipe parent\n");	
+
+			break;
+		}
+	}
+	printf("I am the parent. My processID is %ld.\n",getpid());		
+
+/*	if (pipe(pipefd) == -1)
 		perror("Could not open pipe\n");
 	switch(fork()) {
 	case -1:
 		perror("fork\n");
-	case 0: /*Child*/
-		if (close(pipefd[1]) == -1) /* close unused write end */
+	case 0: 
+		if (close(pipefd[1]) == -1) 
 			perror("Could not close pipe\n");
 		if (pipefd[0] != STDIN_FILENO)
 		{
@@ -30,30 +60,13 @@ int main(int argc, char *argv[])
 			if (close(pipefd[0]) == -1)
 				perror("could not close pipe\n");
 		}
-	//	out = fdopen(pipefd[0], "r");
-	//	newstdin = fdopen(STDIN_FILENO, "w");
 		sleep(2);
-	/*	whil9e(fgets(bufchild, 25, out) != NULL)
-		{
-			if (fputs(bufchild,newstdin) == EOF)
-				printf("error on fputs\n");
-			if (fputs(bufchild, newstdin))
-				printf("fputs works.\n");
-			else
-				printf("there's a mistake.\n");
-		}
-		sleep(2);
-		fclose(out);
-		fclose(newstdin);
-		scanf("%s", buf);
-		printf("The word is %s",buf);*/
-//		write(STDIN_FILENO,"hari\ngokul",10);
 		execl("/bin/sort", "/bin/sort", (char *) NULL);
 		if (close(pipefd[0]) == -1)
 			perror("error closing pipe\n");
 		break;
-	default: /*parent*/		
-		if (close(pipefd[0]) == -1) /* close unused read end */
+	default: 		
+		if (close(pipefd[0]) == -1)
 			perror("Could not close pipe\n");
 		if (pipefd[1] != STDOUT_FILENO)
 		{
@@ -64,29 +77,17 @@ int main(int argc, char *argv[])
 		}
 	
 		in = fdopen(STDOUT_FILENO, "w");
-	/*	while (scanf("%['a'-'Z']", buf) != 0)
-		{
-			fputs(buf, in);
-		}
-		fclose(in);
-		wait();
-		if (close(pipefd[1]) == -1)
-			perror("error closing pipe\n");
-	*/
 		while (scanf("%[A-z]", buf) != EOF)
 		{
-	/*	printf("%s\n", buf);*/
 			scanf("%*c");
 			fputs(buf, in);
 			fputc('\n', in);
-	/*	if (close(pipefd[1]) == -1)
-			perror("error closing pipe\n");
-	*/	}
+		}
 		fclose(in);
 		wait(NULL);
 
 		break;
 	}
-
+*/
 	return 0;
 }
