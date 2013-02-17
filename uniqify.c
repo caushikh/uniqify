@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define N_PIPES 3
+#define N_PIPES 1 
 
 int main(int argc, char *argv[])
 {
@@ -37,13 +37,14 @@ int main(int argc, char *argv[])
 	//		printf("%d : opened communication with suppressor\n",i+1);
 			outsort[i] = fdopen(sortfd[i][0], "r");
 			insupp[i] = fdopen(suppfd[i][1],"w");
-		
-			while (fgets(buf, 25, outsort[i]) != NULL)
+			while (!feof(outsort[i]) && !ferror(outsort[i])
+				&& fgets(buf, 25, outsort[i]) != NULL)
 			{
 				printf("sorter %d : %s", i+1, buf);
 				fputs(buf, insupp[i]);
 				printf("gets to this part\n");
 			}
+			printf("completes fgets\n");
 			if(fclose(outsort[i]))
 				perror("error closing file stream\n");
 			if(fclose(insupp[i]))
@@ -84,7 +85,8 @@ int main(int argc, char *argv[])
 		/* do work here */
 		for (i = 0; i < N_PIPES; i++)
 		{
-			while (fgets(buf, 25, outsupp[i]) != NULL)
+			while (!feof(outsupp[i]) && !ferror(outsupp[i])
+				&& fgets(buf, 25, outsupp[i]) != NULL)
 			{
 				printf("Suppressor Pipe %d : %s", i+1, buf);
 			}
@@ -107,8 +109,6 @@ int main(int argc, char *argv[])
 			fflush(insort[i]);
 			if(fclose(insort[i]))
 				perror("error closing file stream\n");
-			if(feof(insort[i]))
-				printf("end of file is set.\n");
 		}
 	/*	while (scanf("%[A-z]", buf) != EOF)
 		{
