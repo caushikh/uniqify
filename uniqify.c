@@ -15,6 +15,9 @@ int main(int argc, char *argv[])
 	FILE *outsort[N_PIPES];
 	FILE *insupp[N_PIPES];
 	FILE *outsupp[N_PIPES];
+
+	char wlist[N_PIPES];
+	int isEmpty;
 	int i;
 	for (i = 0; i < N_PIPES; i++)
 	{
@@ -29,6 +32,7 @@ int main(int argc, char *argv[])
 		case -1:
 			perror("fork\n");
 		case 0: /*child*/
+			sleep(3);
 			printf("I am sorter %d. My processID is %ld.\n",i+1,getpid());
 			if (close(sortfd[i][1]) == -1)
 				perror("could not close write end\n");
@@ -38,10 +42,10 @@ int main(int argc, char *argv[])
 			outsort[i] = fdopen(sortfd[i][0], "r");
 			insupp[i] = fdopen(suppfd[i][1],"w");
 			while (!feof(outsort[i]) && !ferror(outsort[i])
-				&& fgets(buf, 25, outsort[i]) != NULL)
+				/*&& fgets(buf, 25, outsort[i]) != NULL*/)
 			{
-				printf("sorter %d : %s", i+1, buf);
-				fputs(buf, insupp[i]);
+			//	printf("sorter %d : %s", i+1, buf);
+			//	fputs(buf, insupp[i]);
 				printf("gets to this part\n");
 			}
 			printf("completes fgets\n");
@@ -71,6 +75,7 @@ int main(int argc, char *argv[])
 	case -1: 
 		perror("fork()\n");
 	case 0:
+		sleep(3);
 		printf("I am the suppressor. My processID is %ld.\n", getpid());
 
 		/* attach to suppressor-sorter pipes */
@@ -89,6 +94,29 @@ int main(int argc, char *argv[])
 				&& fgets(buf, 25, outsupp[i]) != NULL)
 			{
 				printf("Suppressor Pipe %d : %s", i+1, buf);
+			}
+		}
+		
+		/* get first word from all pipes */
+		for (i = 0; i < N_PIPES; i++)
+		{
+			if(!feof(outsupp[i]) && !ferror(outsupp[i])
+				&& fgets(buf, 25, outsupp[i]) != NULL)
+			{
+				wlist[i] = buf;
+			}
+			else 
+				wlist[i] = "";
+		}
+		
+		/* check if all the pipes are empty */
+		isEmpty = 0;
+		for (i = 0; i < N_PIPES; i++)
+		{
+			if (feof(outsupp[i]) || ferror(outsupp[i]))
+			{
+				isEmpty++;
+				continue;
 			}
 		}
 		/* close pipes */
@@ -110,14 +138,6 @@ int main(int argc, char *argv[])
 			if(fclose(insort[i]))
 				perror("error closing file stream\n");
 		}
-	/*	while (scanf("%[A-z]", buf) != EOF)
-		{
-			scanf("%*c");
-			fputs(buf, in);
-			fputc('\n', in);
-		}
-		fclose(in);
-	*/
 
 		/* wait for all processes to complete work and then close
 		 * pipes */
@@ -125,12 +145,7 @@ int main(int argc, char *argv[])
 		{
 			wait(NULL);
 		}
-	/*	for (i = 0; i < N_PIPES; i++)
-		{
-			if (close(sortfd[i][1]) == -1)		
-				perror("could not close pipe parent\n");	
-		}
-	*/
+
 		break;
 	}
 
