@@ -1,3 +1,4 @@
+#include <signal.h>
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
@@ -9,8 +10,25 @@
 #define MAX_PIPES 1000 
 #define BUF_SIZE 100 
 
+static int npipes = 1;
+
 int isAllEmpty(FILE *pipes[MAX_PIPES], int npipes);
 int findFirst(char **wlist, char *first, int npipes);
+
+static void phandler(int sig)
+{
+	int i;
+	for (i = 0; i < npipes; i++)
+	{
+		wait(NULL);
+	}
+	_exit(EXIT_FAILURE);
+}
+
+static void chandler(int sig)
+{
+	_exit(EXIT_FAILURE);
+}
 
 int main(int argc, char *argv[])
 {
@@ -27,15 +45,27 @@ int main(int argc, char *argv[])
 	char *last;
 	char *next;
 	int pipeno;
-	int npipes;
+
+	struct sigaction sa;
+	struct sigaction sa_chd;
 
 	npipes = atoi(argv[1]);
-	
+
 	if(npipes > MAX_PIPES)
 	{
 		printf("The limit is %d pipes.\n", MAX_PIPES);
 		exit(EXIT_FAILURE);
 	}
+
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = phandler;
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		perror("sigaction failed\n");
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		perror("sigaction failed\n");
+	if (sigaction(SIGHUP, &sa, NULL) == -1)
+		perror("sigaction failed\n");
 
 	int i;
 	for (i = 0; i < npipes; i++)
@@ -51,6 +81,18 @@ int main(int argc, char *argv[])
 		case -1:
 			perror("fork\n");
 		case 0: /*child*/
+			sigemptyset(&sa_chd.sa_mask);
+			sa_chd.sa_flags = 0;
+			sa_chd.sa_handler = chandler;
+			if (sigaction(SIGINT, &sa_chd, NULL) == -1)
+				perror("sigaction failed\n");
+			if (sigaction(SIGQUIT, &sa_chd, NULL) == -1)
+				perror("sigaction failed\n");
+			if (sigaction(SIGHUP, &sa_chd, NULL) == -1)
+				perror("sigaction failed\n");
+
+			insupp[i] = fdopen(suppfd[i][1], "w");
+			setlinebuf(insupp[i]);
 			printf("I am sorter %d. My processID is %ld.\n",i+1,getpid());
 			if (close(sortfd[i][1]) == -1)
 				perror("could not close write end\n");
