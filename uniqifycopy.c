@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -5,30 +6,39 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define N_PIPES 3 
+#define MAX_PIPES 1000 
 #define BUF_SIZE 100 
 
-int isAllEmpty(FILE *pipes[N_PIPES]);
-int findFirst(char **wlist, char *first);
+int isAllEmpty(FILE *pipes[MAX_PIPES], int npipes);
+int findFirst(char **wlist, char *first, int npipes);
 
 int main(int argc, char *argv[])
 {
-	int sortfd[N_PIPES][2];
-	int suppfd[N_PIPES][2];
+	int sortfd[MAX_PIPES][2];
+	int suppfd[MAX_PIPES][2];
 	char buf[25];
-	FILE *insort[N_PIPES];
-	FILE *outsort[N_PIPES];
-	FILE *insupp[N_PIPES];
-	FILE *outsupp[N_PIPES];
+	FILE *insort[MAX_PIPES];
+	FILE *outsort[MAX_PIPES];
+	FILE *insupp[MAX_PIPES];
+	FILE *outsupp[MAX_PIPES];
 
 	char **wlist;
 	int isEmpty;
 	char *last;
 	char *next;
 	int pipeno;
+	int npipes;
+
+	npipes = atoi(argv[1]);
+	
+	if(npipes > MAX_PIPES)
+	{
+		printf("The limit is %d pipes.\n", MAX_PIPES);
+		exit(EXIT_FAILURE);
+	}
 
 	int i;
-	for (i = 0; i < N_PIPES; i++)
+	for (i = 0; i < npipes; i++)
 	{
 		/* create pipes for each sorter */
 		if (pipe(sortfd[i]) == -1)
@@ -62,8 +72,9 @@ int main(int argc, char *argv[])
 					perror("could not close pipe\n");
 			}
 
-			outsort[i] = fdopen(STDIN_FILENO, "r");
-			insupp[i] = fdopen(STDOUT_FILENO, "w");
+		//	outsort[i] = fdopen(STDIN_FILENO, "r");
+		//	insupp[i] = fdopen(STDOUT_FILENO, "w");
+		//	insupp[i] = fdopen(sortfd[i][1], "w");
 			execl("/bin/sort", "/bin/sort", (char *)NULL);
 	#if 0		
 			while (!feof(outsort[i]) && !ferror(outsort[i])
@@ -97,38 +108,65 @@ int main(int argc, char *argv[])
 		}
 	}
 	/* write words into pipe */
-	for (i = 0; i < N_PIPES; i++)
+	pipeno = 0;
+	while (scanf("%[A-Za-z]", buf) != EOF)
 	{
+		scanf("%*c");
+		for (i = 0; i < strlen(buf); i++)
+			buf[i] = tolower(buf[i]);
+		fputs(buf, insort[pipeno]);
+		fputc('\n', insort[pipeno]);
+		if (pipeno < npipes - 1)
+			pipeno++;
+		else
+			pipeno = 0;
+	}
+	printf("The words have been dealt.\n");
+/*	for (i = 0; i < N_PIPES; i++)
+	{
+		while (scanf("%[A-z]", buf) != EOF)
+		{
+			scanf("%*c");
+			fputs(buf, insort[i]);
+			fputc('\n', in);
+		}
+
 		fputs("word\nhari\nis\ngreatest\n", insort[i]);
 		fflush(insort[i]);
 	}
+	*/
 	/* close all write pipes */
-	for (i = 0; i < N_PIPES; i++)
+	for (i = 0; i < npipes; i++)
 	{
 		if(fclose(insort[i]))
 			perror("error closing file stream\n");
 	}
 	
 	/* wait for all children to sort */
-	for (i = 0; i < N_PIPES; i++)
+/*	for (i = 0; i < npipes; i++)
+	{	
 		wait(NULL);
-
-	wlist = malloc(N_PIPES * sizeof(char *));
-	for (i = 0; i < N_PIPES; i++)
+		printf("The program gets here.\n");
+	}*/
+	wlist = malloc(npipes * sizeof(char *));
+	for (i = 0; i < npipes; i++)
 	{
 		wlist[i] = malloc(BUF_SIZE);
 	}
 	last = malloc(BUF_SIZE);
 	next = malloc(BUF_SIZE);
 	/* get first word from all pipes */
-	if (!isAllEmpty(outsupp))
+	if (!isAllEmpty(outsupp, npipes))
 	{
-//		printf("The program gets here.\n");
-		for (i = 0; i < N_PIPES; i++)
+		printf("The program gets here.\n");
+		for (i = 0; i < npipes; i++)
 		{
 			if(!feof(outsupp[i]) && !ferror(outsupp[i])
 				&& fgets(buf, 25, outsupp[i]) != NULL)
 			{
+				
+	printf("The program gets here.\n");
+			//	printf("%s", buf);
 				strcpy(wlist[i], buf);
 				
 			}
@@ -138,14 +176,15 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-
+	
+	printf("The program gets here.\n");
 	/* check if all the pipes are empty */
 	
 	last[0] = '\0';
-	while (!isAllEmpty(outsupp))
+	while (!isAllEmpty(outsupp, npipes))
 	{
 	
-		pipeno = findFirst(wlist, next);
+		pipeno = findFirst(wlist, next, npipes);
 		if (strcmp(next, last) != 0)
 		{
 			printf("%s", next);
@@ -170,7 +209,7 @@ int main(int argc, char *argv[])
 			printf("Suppressor Pipe %d : %s", i+1, buf);
 		}
 	}*/
-	for (i = 0; i < N_PIPES; i++)
+	for (i = 0; i < npipes; i++)
 	{
 	//	printf("Suppressor: closing pipe %d\n", i+1);
 		if(fclose(outsupp[i]))
@@ -178,6 +217,13 @@ int main(int argc, char *argv[])
 	/*	if (close(suppfd[i][0]) == -1)
 			perror("Could not close pipe\n");*/
 	}
+	/* wait for all children to sort */
+	for (i = 0; i < npipes; i++)
+	{	
+		wait(NULL);
+		printf("The program gets here.\n");
+	}
+
 	free(wlist);
 	free(next);
 	free(last);
@@ -278,32 +324,33 @@ int main(int argc, char *argv[])
 }
 #endif
 
-int isAllEmpty(FILE *pipes[N_PIPES])
+int isAllEmpty(FILE *pipes[MAX_PIPES], int npipes)
 {
 	int isEmpty = 0;
 	int i;
-	for (i = 0; i < N_PIPES; i++)
+	for (i = 0; i < npipes; i++)
 	{
-		if (feof(pipes[i]) || ferror(pipes[i]))
+		if (!feof(pipes[i]) && !ferror(pipes[i]))
 		{
-			isEmpty++;
-			continue;
+			return 0;
+	//		isEmpty++;
+	//		continue;
 		}
 	}
 
-	if (isEmpty == N_PIPES)
+//	if (isEmpty == N_PIPES)
 		return 1;
-	return 0;
+//	return 0;
 }
 
-int findFirst(char **wlist, char *first)
+int findFirst(char **wlist, char *first, int npipes)
 {
 	int pipeno;
 
 	/* start with the first word available */
 	
 	int i;
-	for (i = 0; i < N_PIPES; i++)
+	for (i = 0; i < npipes; i++)
 	{
 		if (wlist[i] != '\0')
 		{
@@ -312,7 +359,7 @@ int findFirst(char **wlist, char *first)
 			break;
 		}
 	}
-	for (i = pipeno + 1; i < N_PIPES; i++)
+	for (i = pipeno + 1; i < npipes; i++)
 	{
 		if (wlist[i] == '\0')
 			continue;
