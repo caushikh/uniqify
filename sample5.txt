@@ -1,0 +1,636 @@
+Acoustics and physical models of bird sounds
+Seppo Fagerlund
+HUT, Laboratory of Acoustics and Audio Signal Processing
+Seppo.Fagerlund@hut.fi
+Abstract
+For humans bird song is as natural phenomena as speech or human singing.
+However organization and generation of bird song is not so well-known as
+one for speech. In this paper we take short review to the basic stuctures of
+sounds birds can produce and also to principles of sound producing mechanism
+in birds. Birds have unique organ for sound production among all
+animals in the world. Both organ itself and also sounds it can produce have
+large diversity between different species. We also introduce how popular
+speech and audio modelling methods can be used to model sound production
+in birds.
+1. INTRODUCTION
+Birds and especially sound of birds are importatant for humans and to our culture. For
+many people sound of birds is the sign for starting of the spring. Bird-watching is also
+popular hobby in many countries. Birds can be heard even in big cities and there they
+are one of the few reminders of the surrounding nature. Also many composers, poets and
+writers have been inspired by the song of birds.
+The primary sound source in birds is syrinx, which is a unique organ to birds (King
+1989). Syrinx is located at the junction of the two primary bronchi and the trachea or
+entirely in the trachea or in the bronchi. Syrinx resembles human vocal cords in function,
+but it is very different in form. Also the vocal tract, whose main parts are trachea, larynx,
+mouth and beak, interacts to the sound of birds (Nowicki 1987). The anatomy of the
+syrinx and the avian vocal tract vary considerably among different orders of birds and
+sometimes even in different families within the same order.
+Stucture of bird song has large diversity. Typical song may contain components which
+are pure sinusoidal, harmonic, nonharmonic, broadband and noisy in structure (Nowicki
+1997). Sound is often modulated in amplitude or frequency or even both together
+(coupled modulation) (Brackenbury 1989). Frequency range is relatively small, typically
+fundamental frequency lies between 3 and 5 kHz. A well-established way to divide song
+into four hierarchical levels is: elements or notes, syllables, phrases and song (Catchpole
+& Slater 1995). Elements can be regarded as elementary building units in bird song (Anderson,
+Dave & Margoliash 1996) whereas phrases and songs often contain individual and
+regional variation. Duration of one syllable ranges from few to few hundred milliseconds.
+1
+Larynx
+Mouth Beak
+Lungs
+Trachea
+Syrinx
+Bronchi
+Figure 1: Parts and organization of avian sound producing mechanism.
+The sound producing mechanism in birds resembles the one in humans. Exitation
+signal in birds is produced by syrinx and vocal tract can be seen as a resonator tube that
+modulates the signal from the syrinx. Elements of the bird song are acoustically distinct,
+like notes in music, and they constitute a characteristic sequence. Therefore it is natural
+to use methods used in speech and musical instrument modelling to model and synthetise
+the sound of the birds. Digital waveguides are a popular method to model many kinds
+of spatially distributed acoustical mechanisms and organs and it have also been used to
+model sound production in birds (Kahrs & Avanzini 2001) (Smyth & Smith 2002).
+2. SOUND PRODUCTION MECHANISM
+Main parts of sound production mechanism in birds are lungs, bronchi, syrinx, trachea,
+larynx, mouth and beak. Airflow from lungs travels through the bronchi to the syrinx,
+which is the main source of sound. Sound from syrinx is then modulated by vocal tract,
+which consist of the trachea, larynx, mouth and beak. In figure 1 is presented schematic
+view of the mechanism. Dimensions of mechanism and parts of it varies considerably
+among different species, but organization is rather uniform.
+2
+2.1. Syrinx
+Syrinx (see Figure 2) is the most important and most extensively studied organ in the bird
+sound production mechanism. Besides that the organ is important in sound production,
+it have also provided valuable information to the taxonomy of birds because of distinction
+between anatomy of the organ in different species. The German anatomist Müller
+classified bird species by their syringeal anatomy already in 1878 (Müller 1878). Müller
+limited his studies to Passeriformes, but Beddard (Beddard 1898) took a wider range in
+his studies. Many later studies have confirmed the classification by Müller and Beddard.
+Three different types of syrinx, namely tracheobronchial, tracheal and bronchial, can
+be found according to distinction between tracheal and bronchial elements of syrinx and
+topographical position of the main sound producing mechanism. When main sound production
+mechanism is located in the bronchi it can be in different position in the two
+bronchi. Tracheal elements are cartillage rings (see Figure 2), typically complete, in
+direct continuation with trachea. Bronchial elements are paired incomplete C-shaped cartilage
+rings with open ends against each other. Classification into these three classes is
+however difficult task because intermediate forms are common.
+Songbirds (order Passeriform suborder Passeri) are the largest group of the birds, they
+cover about 4000 out of 9000 total number of birdspecies (Catchpole & Slater 1995).
+Songbirds and the syrinx of songbirds are most extensively studied among all birds. The
+syrinx of songbirds is complex in structure but relatively uniform in this group (King
+1989) and it can be regarded as the prototype syrinx (Figure 2). The syrinx is located in
+the junction of the trachea and two bronchi and therefore it belongs to the group of tracheobronchial
+syrinx. When a bird is singing, airflow from lungs makes syringeal medial
+tympaniform membrane (MTM) in each bronchi to vibrate through the Bernoulli effect
+(Fletcher 1992). The membrane vibrates nonlinearly opposite to the cartilage wall. Voice
+and motion of the membrane is controlled by a symmetrical pair of muscles surrounding
+the syrinx. Membranes can vibrate independently to each other with different fundamental
+frequencies and modes. Membranes are pressure controlled like a reed in woodwind
+instruments, but membranes are blown open while the reed in the woodwind instruments
+is blown closed.
+In contrast to the MTM theory recent studies with endoscopic imaging have shown
+that MTM would not be the main source of sound (Goller & Larsen 1997b). Goller
+suggests that sound is produced by two soft tissues, medial and lateral labia (ML and LL
+in Figure 2), similar to human vocal folds. Sound is produced by airflow passing through
+two vibrating tissues. Further evidence to this comes from a study where MTM’s were
+surgically removed (Goller & Larsen 2002). After removal birds were able to phonate
+and sing almost normally. Small changes in song structure however were found, which
+indicates that MTM’s have a function in sound production. However it is possible that
+birds may be able to compensate the loss of MTM.
+Also, because of large diversity in structure of avian syrinx and also in sounds, it is
+possible that the MTM theory is correct for some species. For example Goller and Larsen
+limited their study only to cardinals (Cardinalis cardinalis) and zebra finches (Taeniopygia
+guttata). In contrast in (Gaunt, Gaunt & Casey 1982) ring doves (Streptoperia risoria)
+were studied as evidence for the MTM theory. Furthermore in (Goller & Larsen 1997a) it
+was found that the main source of sound in pigeons and doves is the tympaniform membrane.
+However this membrane is located in the trachea and not in the bronchi.
+3
+?? ??
+ 
+ 
+ 
+ 
+		
+
+		
+
+ 
+  
+ 
+  
+
+
+ 
+ 
+  
+ 
+ 
+  
+ 
+MTM
+Cartillage
+wall
+Bronchus
+Bronchus
+Trachea
+Bronchial
+rings
+Tracheal
+rings
+ML LL
+Figure 2: Schematic view of songbird syrinx. According to classical theory sound is
+produced by the vibrations of the medial tympaniform membrane (MTM) against the
+cartilage wall. Recent studies suggests that sound is produced in similar way than in the
+human vocal folds by the medial labia (ML) and the lateral labia (LL).
+2.2. Trachea
+The trachea in the birds is a tube between the syrinx and the larynx which acts as a resonator
+to the sound produced by the syrinx. Elements of the tube are cartilage rings,
+which are typically complete (McLelland 1989). The number of the tracheal cartilage
+rings depends on the length of the neck and it ranges from about 30 in small passerines
+to about 350 in long necked flamingos and cranes. However in the number of species the
+trachea is arranged in loops or coils so that the length of the trachea is much longer than
+the length of the neck. It have been argued that the tracheal loops improve transfer function
+so that the trachea can transfer many frequencies (Gaunt, Gaunt, Prange & Wasser
+1987). In some species the trachea is joined with air sacs or bulbous expansions. In some
+penguins (Spheniscidae) and petrels (Procellariidae) the trachea is fragmented into two
+channels. These speciespecific features are responsible for some characteristic sounds in
+these species.
+2.3. Larynx, mouth and beak
+The larynx in the birds does not include vocal folds like in humans. Only few studies have
+related to the larynx in the birds and its function to sound production is controversial. The
+larynx seems to play only little or no role in sound production.
+The mouth operates in birds as a cavity resonator like in humans. The mouth in birds
+is however less flexible. With the tongue birds can control the cross-sectional area of the
+mouth (Fletcher & Tarnopolsky 1999), but only few species can use the tongue for sound
+4
+production like humans (Patterson & Pepperberg 1994) because most of the birds have a
+rather stiff tongue.
+Analysis of the acoustical behaviour of the beak is a difficult task because form of the
+beak is rather complex (Fletcher & Tarnopolsky 1999). The analysis can not be reduced
+into one or two dimensions without losing vital information. Another difficulty with beak
+acoustics is its highly dynamic nature. Beak opening and closing change acoustical properties
+of the beak by changing dimensions of the gape. Recent studies suggest even bigger
+role for the beak in sound production (Hoese, Podos, Boetticher & Nowicki 2000). Hoese
+et al. shows that beak opening and closing changes the effective length of the vocal tract,
+but effect to the vocal tract resonances is nonlinear. Birds can also change dimensions of
+the vocal tract by movements of the head (Westneat, Long, Hoese & Nowicki 1993).
+3. ORGANIZATION OF BIRD SOUNDS
+Bird sounds are typically divided into two categories: songs and calls (Krebs &Kroodsma
+1980) . Singing is limited to songbirds, but they cover only about half of the birds. Nonsongbirds
+use also sounds to communicate and it is not less important than for songbirds
+(Beckers, Suthers & ten Cate 2003). Generally songbird sounds are more complex and
+they have a larger repertoire than non-songbirds, because the ability to control sound
+production is better (Gaunt 1983).
+Diversity of different sounds birds can produce is large. Characteristics of simple
+voiced sounds are a fundamental frequency and its harmonics. Voiced sounds in birds
+are closely related to the human vowel sounds in both structure and in a way they are
+produced. However control of the vocal tract in birds is less complex than in humans. In
+voiced sounds in birds fundamental frequency lies between
+??
+and
+??	
+in different
+species. Birds can emphasize intensities of different harmonics with filtering properties
+of the vocal tract. Birds can also produce pure tonal or whistled sounds that does not include
+any harmonics. In both voiced and whistled cases sounds can be modulated in both
+frequency and amplitude. Amplitude modulations of the fundamental element are mostly
+generated by the syrinx (Beckers et al. 2003) but intensity differences between harmonics
+is based on the properties of the vocal tract. Frequency modulation can be divided into
+two categories: continuous frequency modulations and abrupt frequency jumps. Both frequency
+modulations are source-generated (Beckers et al. 2003) (Fee, Shraiman, Pesaran
+& Mitra 1998). In addition to these bird sounds can be also noisy, broadband or chaotic in
+structure (Fletcher 2000). Characteristic of chaotic behaviour is unpredictability in future
+waveform even though source and filter conditions are rather well-known. In figure 3 is
+examples from songs and calls from different species and it illustrates diversity of sounds
+birds can produce.
+3.1. Two-Voice Theory
+With two independently vibrating membranes in the syrinx, birds can in theory produce
+two totally independent carrier waves. It have been suggested that this makes possible
+to sing “internal duet”. Different species use two sound sources in sound production in
+different manner. For example Canaries (Serinus canarius) use only one syringeal source
+to sound production whereas Black-capped chickadees (Parus atricapillus) produce complex
+call notes by using both sources (Nowicki 1997). Three different methods can be
+found: sound can be produced by either membrane alone, by both acting together or by
+5
+Time
+Frequency
+0 0.1 0.2 0.3 0.4 0.5
+0
+0.5
+1
+1.5
+2
+x 104
+Time
+Frequency
+0 0.2 0.4 0.6 0.8 1 1.2 1.4
+0
+0.5
+1
+1.5
+2
+x 104
+Time
+Frequency
+0 0.1 0.2 0.3 0.4 0.5 0.6
+0
+0.5
+1
+1.5
+2
+x 104
+Time
+Frequency
+0 0.5 1 1.5 2
+0
+0.5
+1
+1.5
+2
+x 104
+Time
+Frequency
+0 1 2 3 4 5 6 7
+0
+0.5
+1
+1.5
+2
+x 104
+Time
+Frequency
+0 0.2 0.4 0.6 0.8 1
+0
+0.5
+1
+1.5
+2
+x 104
+Figure 3: Examples of bird sounds from different species. In upper row from left to
+right Willow Warbler (Phylloscopus trochilus), Common Chaffinch (Fringilla coelebs)
+and Hooded Crow (Corvus corone cornix). In lower row Arctic Warbler (Phylloscopus
+borealis), Great Tit (Parus major) and Garden Warbler (Sylvia borin). The x and y-axis
+in panels represent time in seconds and frequency in
+
+, respectively.
+switching sound source from one membrane to other (Suthers 1990). When both membranes
+are active together they may generate same or different sound. It is also common
+for some species that they use all three methods in sound production. First syllable from
+call sound of great tit (Parus major) in the lower center panel in figure 3 represented in
+figure 4 is a example from sound whose generation two sound sources were used.
+3.2. Bird Songs
+Generally songs are long and complex vocalization produced spontaneously by males. In
+few species however also females sing and some species sing even duets. Female songs
+tend to be simpler than song produced by males. Most species sing at certain time of
+the year but birds have also a particular daily schedule when they sing. Best time for
+observing bird singing is in the breeding season at spring. Some birds do not sing at
+all during the rest of the year. Especially during the breeding season male bird song
+has two main functions. One is to attract females and the other one is to repeal rival
+males. However in some species song used to attract females tends to be longer and more
+complex than song for territorial defence. Similar features and functions in female song
+can be found than in male song.
+During the day birds have biggest activity in singing at dawn. Several explanations to
+this have been proposed. Feeding conditions are better after dawn and therefore birds have
+more time to sing at dawn. It is also best time to take over vacant territories. Female birds
+are most fertile at dawn and it is best time to copulate. For example it has been observed
+that great tit (Parus major) males sing at dawn until female wakes and then copulates with
+her (Mace 1987). One practical reason is also that conditions for sound transmission are
+6
+Figure 4: Call sound of Great Tit (Parus major). Some elements of the sound are not in
+harmonic ratio.
+favourable at dawn, because wind and air turbulence are reduced.
+Transmission conditions are important otherwise also and those set limitations to the
+structure of sound. Two fundamental phenomena that affect the transmition of sound are
+attenuation and degredation, which is a problem especially in the dense environments.
+Sound propagation properties are different in different environments and also at different
+heights in a specific environment. Bird sounds adapt to environmental conditions so that
+sound is transmitted to receiver optimally. Optimality condition depends on the function
+of the sound and it does not always mean maximal distance.
+Hierarchical levels of bird song are phrases, syllables and elements or notes. Elementary
+building unit of bird song is called element, which is the smallest separable element
+in spectrogram (see Figure 5). Elements are building blocks of syllables, that may be
+produced by one or more elements or notes. The structure on syllables varies a lot and
+therefore also the number of elements in syllables. Series of syllables that occur together
+in a particular pattern is called a phrase. Syllables in a phrase are typically similar to
+each other, but they can also be different like in the last phrase (end phrase) in figure 5.
+A song is constructed of a series of phrases. When a bird changes the order or types of
+the phrases in the songs the bird is said to have different types of songs and a repertoire
+of song types. Repertoire size varies typically from few to several hundred song types in
+different species.
+3.3. Bird Calls
+Bird calls are usually short and simply, but they can also be complex and can sometimes be
+confused to the simple songs, especially when series of call sounds are connected. Calls
+typically occur in specific context and carry some function and they are produced by both
+7
+Syllables Elements
+Phrases
+Figure 5: Hierarchical levels of common chaffinch (Fringilla coelebs) song. The y-axis
+represents frequency in
+
+and x-axis time in seconds.
+sexes through the whole year. Calls have a large functionality and at least 10 different call
+categories (e.g. alarm, flight and feeding call etc.) can be found. Furthermore some birds
+have more than one call for one category and some use very similar calls for different
+meaning. Call sounds are important for songbirds also and generally they have greater
+repertoire of call sounds than non-songbirds.
+4. PHYSICAL MODELS
+Sound production models in birds were first studied by Greenewalt (Greenewalt 1968),
+whose work has constituted the basis to the studies on the classical model of bird sounds.
+A similar source-filter model can be used to model avian sounds than is used in speech or
+wind instrument modeling. A difference to speech production is that birds may have two
+independent sound sources in the syrinx. Sound from the syringeal source is then filtered
+by the vocal tract. Two different models of avian sound production system are presented
+in figure 6.
+4.1. Models of sound source
+In the classical model of the syrinx tympaniform membrane is assumed to be the main
+source of oscillation. Vibration is driven by membrane’s natural frequency and air column
+resonance in bronchi. Membrane motion against the cartilage wall changes the crosssection
+area of bronchi causing a nonlinear change in pressure and air flow. The pressure
+at tracheal side of the syrinx depends on pressure at the bronchial side of the syrinx
+??
+, air
+density
+
+, displacement of the membrane
+
+, radius of the bronchus
+
+and air flow through
+syrinx
+
+and is given in (Fletcher 1988) as
+8
+Presyringeal
+bronchus
+Presyringeal
+bronchus
+Syrinx
+Syrinx
+Postsyringeal
+bronchus
+Postsyringeal
+bronchus
+and beak
+Larynx, mouth
+Syrinx Trachea and beak
+Larynx, mouth
+Lung
+Lung
+Trachea
+Bronchus
+Lung Bronchus
+Lung
+Figure 6: Two models of avian vocal tract
+???? ??     	
+ ??  
+
+ (1)
+The airflow
+
+from lungs varies in time as a bird is breathing. Membrane can be
+modeled as a simple taut membrane, whose displacement can be calculated as function of
+driving force against the membrane as:
+ 
+
+
+ 
+ 
+   (2)
+where is the mode frequency, is the damping coefficient, is the effective mass of the
+membrane associated to the mode and
+ 
+is position of the membrane at rest. Coefficient
+is small constant term, which is referred to the coupling between and the mode. For
+the driving force in (2) Fletcher gives
+!  #" %$'&??  ?? ??       
+)(*
+(3)
+where "is constant term order of unity.
+The model is successful with voiced sounds but incapable to produce whistled or tonal
+sounds. A one string model to model also tonal sounds was suggested in (Casey & Gaunt
+1985). In this model the membranes in former model are stretched into the shape of
+a string. The string model is capable to produce sound with one fundamental and its
+harmonics. In (Doya & Sejnowski 1995) these two models were mixed so that the string
+model produces tonal harmonic sounds and a mixture of sound from both models produce
+noisy components.
+As mentioned earlier, recent studies have suggested that the sound of birds is produced
+by the tissue folds similar to the human vocal folds (Larsen & Goller 1999). Also recent
+models of bird sound production have been build on models of the human vocal folds
+(Gardner, Gecchi & Magnasco 2001). Gardner’s two-mass model is a simplification to
+geometrical dimensions of the folds. In the model it is assumed that the folds are controlled
+by bronchial pressure
+?? 
+. Averaged pressure at tracheal side of the folds can be
+calculated as a function of bronchial pressure and position of the folds:
+???? ??  ??+ -,/.0 (4)
+where
+
+and .are calculated in terms of phenomenological constant 1and position of the
+center of the folds
+
+as:
+9
+    1
+
+(5)
+.+.  1
+
+(6)
+Position of
+
+can be calculated as given in (Laje, Gardner & Mindlin 2002):
+
+
+
+ 
+. 
+ .  
+(7)
+where
+
+is the restitution constant, is the dissipation constant, .is the driving pressure
+and 
+is constant force term of the vibrating labia.
+4.2. Models of vocal tract
+Relatively little has been done on modeling of the bird vocal tract although its essential
+role in sound production has been discovered for example in (Nowicki 1987) and (Brittan-
+Powell, Dooling, Larsen & Heaton 1997). In (Fletcher & Tarnopolsky 1999) the acoustics
+of the vocal tract of Oscine birds has been studied. Although Fletcher studies limits
+only to song birds, models can be easily modified to correspond to many other birds. In
+model both syringeal sound sources are first connected to the bronchial tube that leads to
+the trachea. Both bronchi and trachea are modeled with an acoustical impedance matrix
+whose coefficients can be calculated by
+??
+
+   	 
+  (8)
+??
+
+
+??  	   (9)
+where
+
+is the air density,  is the speed of sound, 	 is the cross-sectional area of the
+tube, is the length of the tube and
+ , is the wavenumber.  is the
+frequency in Hertz and  is the attenuation coefficient for sound propagating in tube. The
+input impedance for the system that includes two bronchi and the trachea is given by
+ "! $#?? # ??
+#&??% ('
+
+'??'
+
+' # ??%  ??
+ #
+
+
+'
+
+'??'
+
+' ??
+  #??'??'
+
+' ??
+
+(10)
+where # and # %refer to the two bronchi and ' refers to the trachea.
+Fletcher presents also a models for the larynx, mouth and beak. The larynx is modeled
+by a simple series impedance )*,	, where is length and 	 is cross-sectional area
+of the larynx. The mouth can be modeled in a similar way that is used for models of the
+human mouth. Fletcher considers the mouth as a short tube, with varying cross-sectional
+area controlled by raising and lowering of the tongue.
+For the beak Fletcher provides a simplified conical model. The main motivation in this
+model is that it can be solved analytically
++
+
+, - 	/.   
+32
+ 1/0 ,   0#, 0#,32
+ &0 *  (11)
+where
+ 4 ,and 	/. is cross-sectional area of peak base. 0is end correction based
+on measurements with a light sheet-metal beak model and it is given by terms of length
+of the peak , frequency  and tip gape , as
+10
+0  ??
+ ??  
+,, (12)
+Mixing all elements to a network Fletcher gives the final input impedance as
+ "!  ' ??  ' ??
+
+ 
++   '
+
+ ??)
+ 
++ 
+??
+
+(13)
+where ', ),  and + refer to input impedances of the trachea, larynx, mouth and the
+beak, respectively.
+5. SUMMARY
+Primary sound source, namely syrinx, in birds is located in most of the species in the
+junction of the bronchi and the trachea. There exists two competing theories to sound
+producing mechanism in the syrinx. Classical theory profess that sound is produced by
+vibrations of the tympaniform membrane. According to later theory sound is mainly
+produced by two soft tissues similar to human vocal folds. Diversity in structure of the
+syrinx is large and it is possible that either theory holds for some species. The vocal tract
+consist of the trachea, larynx mouth and beak. The function of the vocal tract is as a
+transfer channel and a resonator tube to the open air.
+Spectrum of different sounds birds can produce is large. Sounds fluctuate from pure
+tonal sounds to noisy sounds. Modulations in amplitude and frequency are common. Bird
+sounds can be divided into two groups, songs and calls, with different function. Songs
+are produced mainly by males in the breeding season and main functions of songs are to
+attract females and to compete with other males. Calls are produced by both sexes through
+the whole year. Calls occur always in some particular context with some function.
+Models of bird sound producing mechanism are usually reproduced models from human
+or instrument models. Generally two models are used to model sound production
+in syrinx. In context of classical theory on sound production a membrane model is used.
+Recent studies models sound production in syrinx with two mass model. Main parts of
+the vocal tract excluding the beak are modeled as a tube resonator. For beak simplified
+analytical model have been used.
+6. BIBLIOGRAPHY
+Anderson, S. E., Dave, A. S. & Margoliash, D. (1996), ‘Template-based automatic
+recognition of birdsong syllables from continuous recordings’, J. Acoust. Soc. Am.
+100(2), 1209–1219.
+Beckers, G. J. L., Suthers, R. A. & ten Cate, C. (2003), ‘Mechanisms of frequency and
+amplitude modulation in ring dove song’, The Journal of Experimental Biology
+206(11), 1833–1843.
+Beddard, F. E. (1898), The Structure and Classification of Birds, Longmans, Green, London.
+Brackenbury, J. H. (1989), Functions of the syrinx and the control of sound production,
+in ‘(King & McLelland 1989)’, chapter 4, pp. 193–220.
+11
+Brittan-Powell, E. F., Dooling, R. J., Larsen, O. N. & Heaton, J. T. (1997), ‘Mechanism
+of vocal production in budgerigars (melopsittacus undulatus)’, J. Acoust. Soc. Am.
+101(1), 578–589.
+Casey, R. M. & Gaunt, A. S. (1985), ‘Theoretical models of the avian syrinx’, J. theor.
+Biol. 116, 45–64.
+Catchpole, C. K. & Slater, P. J. B. (1995), Bird Song: Biological Themes and Variations,
+Cambridge University Press, Cambridge, UK.
+Doya, K. & Sejnowski, T. J. (1995), A novel reinforcement model of birdsong vocalization
+learning, in G. Tesauro, D. Touretzky & T. Leen, eds, ‘Advances in Neural
+Information Processing Systems’, Vol. 7, The MIT Press, pp. 101–108.
+Fee, M. S., Shraiman, B., Pesaran, B. & Mitra, P. P. (1998), ‘The role of nonlinear dynamics
+of the syrinx in the vocalizations of a songbird’, J. Acoust. Soc. Am. 95, 67–71.
+Fletcher, N. H. (1988), ‘Bird song - a quantitative acoustic model’, J. theor. Biol 135, 455–
+481.
+Fletcher, N. H. (1992), Acoustics Systems in Biology, Oxford U.P., New York.
+Fletcher, N. H. (2000), ‘A class of chaotic bird calls’, J. Acoust. Soc. Am. 108(2), 821–826.
+Fletcher, N. H. & Tarnopolsky, A. (1999), ‘Acoustics of the avian vocal tract’, J. Acoust.
+Soc. Am. 105(1), 35–49.
+Gardner, T., Gecchi, G. & Magnasco, M. (2001), ‘Simple motor gestures for birdsongs’,
+Physical Review Letters.
+Gaunt, A. S. (1983), ‘A hypothesis concerning the relationship of syringeal structure to
+vocal abilities’, Auk 100, 853–862.
+Gaunt, A. S., Gaunt, S. L. L. & Casey, R. M. (1982), ‘Syringeal mechanics reassessed:
+Evidence from streptopelia’, Auk 99, 474–494.
+Gaunt, A. S., Gaunt, S. L. L., Prange, H. D. &Wasser, J. S. (1987), ‘The effects of tracheal
+coiling on the vocalization of cranes (aves: Gruidae)’, J. comp. Physiol. 161, 43–58.
+Goller, F. & Larsen, O. N. (1997a), ‘In situ biomechanism of the syrinxand sound generation
+in pingeons’, J. exp. Biol 200, 2165–2176.
+Goller, F. & Larsen, O. N. (1997b), A new mechanism of sound generation in songbirds,
+in ‘Proceedings of the National Academy of Sciences’, Vol. 94, pp. 14787–14791.
+Goller, F. & Larsen, O. N. (2002), ‘New perspectives on mechanism of sound generation
+in songbirds’, J. comp. Physiol. A 188, 841–850.
+Greenewalt, C. H. (1968), Bird Song: Acoustics and Physiology, Smithsonian Institution
+Press, Washington D.C.
+Hoese, W. J., Podos, J., Boetticher, N. C. & Nowicki, S. (2000), ‘Vocal tract function in
+birdsong production: Experimental manipulation of beak movemets’, J. Exp. Biol.
+203, 1845–1855.
+12
+Kahrs, M. & Avanzini, F. (2001), Computer synthesis of bird songs and calls, in ‘Proceedings
+of the COST-G6 Conference on Digital Audio Effects (DAFx01)’, Limerick,
+Ireland, pp. 23–27.
+King, A. S. (1989), Functional analysis of the syrinx, in ‘(King & McLelland 1989)’,
+chapter 3, pp. 105–192.
+King, A. S. & McLelland, J., eds (1989), Form and Function in Birds, Vol. 4, Academic
+Press.
+Krebs, J. R. & Kroodsma, D. E. (1980), ‘Repertoires and geographical variation in bird
+song’, Adv. Study Behav. 11, 143–177.
+Laje, R., Gardner, T. J. & Mindlin, G. B. (2002), ‘Neuromuscular control of vocalization
+in birdsong: A model’, Physical Review E 65, 051921.
+Larsen, O. N. & Goller, F. (1999), ‘Role of syringeal vibrations in bird vocalisations’,
+Proc. Roy. Soc. Lond.B 266, 1609–1615.
+Mace, R. (1987), ‘The dawn chorus in the great tit paras major is directly related to female
+fertility’, Nature 333, 123–132.
+McLelland, J. (1989), Larynx and trachea, in ‘(King & McLelland 1989)’, chapter 2,
+pp. 69–103.
+Müller, J. P. (1878), On certain variations in the vocal organs of the Passeres that have
+hitherto escaped notice, London: Macmillan.
+Nowicki, S. (1987), ‘Vocal tract reconances in oscine bird sound production: Evidence
+from birdsongs in a helium atmosphere’, Nature 325(6099), 53–55.
+Nowicki, S. (1997), Bird acoustics, in M. J. Crocker, ed., ‘Encyclopedia of Acoustics’,
+John Wiley & Sons, chapter 150, pp. 1813–1817.
+Patterson, D. K. & Pepperberg, I. M. (1994), ‘A comparative study of human and parrot
+phonation: Acoustic and articulatory correlates of vowels’, J. Acoust. Soc. Am. 96(2,
+Pt.1), 634–648.
+Smyth, T. & Smith, J. O. (2002), The syrinx: nature’s hybrid wind instrument, in ‘CDROM
+Paper Collection, Cancun, Mexico, Pan-America/Iberian Meeting on Acoustics’.
+Suthers, R. A. (1990), ‘Contributions to birdsong from the left and right sides of the intact
+syrinx’, Nature 347(6292), 473–477.
+Westneat, M. W., Long, J. H., Hoese, W. J. & Nowicki, S. (1993), ‘Kinematics of birdsong:
+Functional correlation of cranical movements and acoustic features in sparrows’,
+J. exp. Biol 182, 147–171.
+13
